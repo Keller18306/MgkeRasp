@@ -6,6 +6,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = merge(common, {
     entry: './src/index.ts',
     mode: 'production',
+    devtool: false,
     plugins: [
         new CopyPlugin({
             patterns: [
