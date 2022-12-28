@@ -1,6 +1,6 @@
+import StudentParser from "../parser/student";
+import { Group, Groups } from "../parser/types";
 import { createIframe } from "./iframe";
-import StudentParser from "./parser/student";
-import { Group, Groups } from "./parser/types";
 import { readFile } from "./utils";
 
 export class Builder {
@@ -172,8 +172,8 @@ export class Builder {
         for (let i = 0; i < maxCountLessons; i++) {
             const maxRowLevel = Math.max(...group.days.map((day) => {
                 const lessons = day.lessons[i];
-                
-                if ( Array.isArray(lessons)) {
+
+                if (Array.isArray(lessons)) {
                     return lessons.length
                 } else {
                     return 1;
@@ -189,7 +189,7 @@ export class Builder {
 
             const n = row.insertCell()
             n.rowSpan = maxRowLevel;
-            n.textContent = String(i+1)
+            n.textContent = String(i + 1)
 
             for (const day of group.days) {
                 const lesson = day.lessons[i];
@@ -209,13 +209,13 @@ export class Builder {
                             continue;
                         }
 
-                        rows[sub].insertCell().textContent = String(subgroup.subgroup)+'.';
+                        rows[sub].insertCell().textContent = String(subgroup.subgroup) + '.';
                         rows[sub].insertCell().textContent = subgroup.lesson;
                         rows[sub].insertCell().textContent = subgroup.type
                         rows[sub].insertCell().textContent = subgroup.cabinet
                         rows[sub].insertCell().textContent = subgroup.teacher
                     }
-                    
+
                 } else {
                     const r1 = row.insertCell()
                     r1.rowSpan = maxRowLevel

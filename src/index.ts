@@ -1,5 +1,5 @@
 import { Builder } from "./builder";
-import { Viewer } from './viewer'
+import { Viewer } from './viewer';
 
 (window as any).KellerMGKE = {
     Builder,

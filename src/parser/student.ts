@@ -1,4 +1,4 @@
-import { chunkArray } from "../utils";
+import { chunkArray } from "../builder/utils";
 import { AbstractParser } from "./abstract";
 import { GroupLessonExplain, Groups, Lesson } from './types';
 

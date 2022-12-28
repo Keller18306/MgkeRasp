@@ -1,9 +1,7 @@
 const path = require('path');
-const { merge } = require('webpack-merge');
-const common = require('./webpack.dev.config.js');
 const CopyPlugin = require("copy-webpack-plugin");
 
-module.exports = merge(common, {
+module.exports = {
     entry: './src/index.ts',
     mode: 'production',
     devtool: false,
@@ -15,8 +13,28 @@ module.exports = merge(common, {
         })
     ],
     output: {
-        filename: 'bundle.js',
         path: path.resolve(__dirname, 'build'),
+        filename: 'bundle.js',
         clean: true
+    },
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+    },
+    optimization: {
+        moduleIds: 'deterministic'
+    },
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
     }
-});
+};

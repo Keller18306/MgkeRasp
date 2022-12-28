@@ -1,26 +1,11 @@
 const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.config.js');
 
-module.exports = {
-    entry: './src/index.ts',
+module.exports = merge(common, {
     mode: 'development',
     devtool: 'inline-source-map',
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            },
-        ],
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
-    },
     devServer: {
-        static: './static/',
-    },
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-    },
-};
+        static: './static/'
+    }
+});

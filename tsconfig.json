@@ -14,7 +14,8 @@
             "ESNext"
         ],
         "importHelpers": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "jsx": "react-jsx"
     },
     "exclude": [
         "dist",
