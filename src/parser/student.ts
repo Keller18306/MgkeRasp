@@ -1,6 +1,6 @@
 import { chunkArray } from "../builder/utils";
 import { AbstractParser } from "./abstract";
-import { GroupLessonExplain, Groups, Lesson } from './types';
+import { Day, GroupLessonExplain, Groups, Lesson } from './types';
 
 type GroupPosition = {
     group: string,
@@ -18,114 +18,63 @@ export default class StudentParser extends AbstractParser {
         }
 
         for (const table of this.parseBodyTables()) {
-            this.parseTable(table)
+            const h3 = table.previousElementSibling! as HTMLHeadingElement //date
+            const h2 = h3.previousElementSibling! as HTMLHeadingElement //group
+
+            this.parseGroup(table, h2)
         }
 
         return this.groups
     }
 
-    protected getGroupsPositions(rows: HTMLTableRowElement[]): GroupPosition[] {
-        const groupPositions: GroupPosition[] = []
+    protected parseLesson(lessonCell: HTMLTableCellElement, cabinetCell: HTMLTableCellElement): Lesson {
+        let lesson: string | undefined | null = lessonCell.textContent?.trim();
+        let cabinet: string | undefined | null = cabinetCell.textContent?.trim();
 
-        for (const row_i in rows) {
-            const row = rows[row_i]
-            const cells = row.cells
-
-            if (cells.length === 0) continue;
-
-            if (!cells[0].textContent?.includes('№')) continue;
-
-            for (const cell_i in cells) {
-                const cell = cells[cell_i]
-
-                const groupText = cell.textContent;
-                if (groupText == undefined) continue;
-
-                const group = this.parseGroupNumber(
-                    this.clearElementText(
-                        groupText
-                    )
-                )
-                if (!group || isNaN(+group)) continue;
-
-                groupPositions.push({
-                    group: String(group),
-                    groupText: groupText,
-                    row: +row_i,
-                    cell: +cell_i
-                })
-            }
+        if (lesson == undefined || cabinet == undefined) {
+            throw new Error('lesson or cabinet is undefined')
         }
 
-        return groupPositions
-    }
+        lesson = this.setNullIfEmpty(lesson)
+        cabinet = this.setNullIfEmpty(this.removeDashes(cabinet))
+        let subgroups: GroupLessonExplain[] | null = null;
 
-    protected parseLessons(rows: HTMLTableRowElement[], position: GroupPosition): Lesson[] {
-        const lessons: Lesson[] = []
-
-        for (const row_i in rows) {
-            if (+row_i <= position.row + 1) continue;
-            const row = rows[row_i];
-            const cells = row.cells;
-
-            if (cells.length === 0) continue;
-
-            const lessonId = cells[0].textContent;
-            if (lessonId == undefined || isNaN(+lessonId)) break;
-
-            const lessonCell = cells[position.cell * 2 - 1];
-            let lesson: string | undefined | null = lessonCell.textContent?.trim();
-
-            const cabinetCell = cells[position.cell * 2];
-            let cabinet: string | undefined | null = cabinetCell.textContent?.trim();
-
-            if (lesson == undefined || cabinet == undefined) continue;
-
-            lesson = this.setNullIfEmpty(lesson)
-            cabinet = this.setNullIfEmpty(this.removeDashes(cabinet))
-            let subgroups: GroupLessonExplain[] | null = null;
-
-            if (!lesson) {
-                lessons.push(null);
-                continue;
-            } else {
-                const lessonsChunk = chunkArray(
-                    Array
-                        .from(lessonCell.childNodes)
-                        .filter(_ => _.nodeType === _.TEXT_NODE)
-                        .map(_ => _.textContent!),
-                    3);
-                const cabinetChunk = Array
-                    .from(cabinetCell.childNodes)
+        if (!lesson) {
+            return null;
+        } else {
+            const lessonsChunk = chunkArray(
+                Array
+                    .from(lessonCell.childNodes)
                     .filter(_ => _.nodeType === _.TEXT_NODE)
-                    .map(_ => _.textContent!);
-
-                subgroups = this.parseSubGroupLesson(lessonsChunk, cabinetChunk);
-
-                if (subgroups) {
-                    lessons.push(subgroups)
-                    continue;
-                }
-            }
-
-            const group = Array
-                .from(lessonCell.childNodes)
+                    .map(_ => _.textContent!),
+                3);
+            const cabinetChunk = Array
+                .from(cabinetCell.childNodes)
                 .filter(_ => _.nodeType === _.TEXT_NODE)
                 .map(_ => _.textContent!);
-            const matchType = group[1].match(/\((.+)\)/)?.slice(1)[0]
-            if (!matchType) {
-                throw new Error('group type match error')
-            }
 
-            lessons.push({
-                lesson: group[0],
-                type: matchType,
-                teacher: group[2],
-                cabinet: cabinet
-            })
+            subgroups = this.parseSubGroupLesson(lessonsChunk, cabinetChunk);
+
+            if (subgroups) {
+                return subgroups;
+            }
         }
 
-        return lessons
+        const group = Array
+            .from(lessonCell.childNodes)
+            .filter(_ => _.nodeType === _.TEXT_NODE)
+            .map(_ => _.textContent!);
+        const matchType = group[1].match(/\((.+)\)/)?.slice(1)[0]
+        if (!matchType) {
+            throw new Error('group type match error')
+        }
+
+        return {
+            lesson: group[0],
+            type: matchType,
+            teacher: group[2],
+            cabinet: cabinet
+        }
     }
 
     protected clearEndingNull(lessons: Lesson[]) {
@@ -143,36 +92,80 @@ export default class StudentParser extends AbstractParser {
         lessons.splice(lessons.length - toClear, toClear)
     }
 
-    protected parseTable(table: HTMLTableElement) {
-        const dayName = table.caption?.textContent;
-        if (!dayName) {
-            throw new Error('Day name is not provided')
-        }
+    //-------------------------------------------
 
-        const { day, weekday } = this.parseDayName(dayName)
+    protected parseGroup(table: HTMLTableElement, h2: HTMLHeadingElement) {
+        const group = h2.textContent?.replaceAll(' ', '').split('-')[1]
+        const groupNumber = Number(this.parseGroupNumber(
+            h2.textContent?.replaceAll(' ', '')
+                .split('-')[1]
+        ))
+        if (!group || isNaN(groupNumber)) throw new Error('can not get group number')
 
         const rows = Array.from(table.rows)
 
-        const positions = this.getGroupsPositions(rows)
+        const days: Day[] = this.getDays(rows[0]);
+        this.parseLessons(rows, days);
+        for (const { lessons } of days) {
+            this.clearEndingNull(lessons);
+        }
 
-        for (const position of positions) {
-            const group = position.group
+        this.groups[groupNumber] = {
+            group: group,
+            days: days
+        }
+    }
 
-            if (this.groups[group] === undefined) {
-                this.groups[group] = {
-                    group: position.groupText,
-                    days: []
-                }
-            }
+    protected getDays(row: HTMLTableRowElement): Day[] {
+        const days: Day[] = []
 
-            const lessons = this.parseLessons(rows, position);
-            this.clearEndingNull(lessons)
+        const dayNames = this.parseDayNames(row)
+        for (const dayName of dayNames) {
+            const { day, weekday } = this.parseDayName(dayName)
 
-            this.groups[group].days.push({
-                weekday: weekday,
+            days.push({
                 day: day,
-                lessons: lessons
+                weekday: weekday,
+                lessons: []
             })
+        }
+
+        return days
+    }
+
+    protected parseDayNames(row: HTMLTableRowElement): string[] {
+        const cells = Array.from(row.cells)
+
+        const days: string[] = []
+
+        for (const cell_i in cells) {
+            if (+cell_i == 0) continue;
+            const cell = cells[cell_i]
+
+            const day = cell.textContent?.replaceAll('\n', '')
+            if (day == undefined) throw new Error('cannot get weekday name');
+
+            days.push(day)
+        }
+
+        return days;
+    }
+
+    protected parseLessons(rows: HTMLTableRowElement[], days: Day[]) {
+        for (const row_i in rows) {
+            if (+row_i <= 1) continue;
+            const row = rows[row_i]
+            const cells = row.cells
+
+            for (let cell_i: number = 1; cell_i < Math.floor(cells.length / 2); cell_i++) {
+                const day = cell_i - 1;
+
+                const lessonCell = cells[cell_i * 2 - 1];
+                const cabinetCell = cells[cell_i * 2];
+
+                const lesson = this.parseLesson(lessonCell, cabinetCell);
+                days[day].lessons.push(lesson)
+            }
         }
     }
 }

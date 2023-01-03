@@ -31,7 +31,7 @@ export abstract class AbstractParser {
     }
 
     protected parseDayName(value: string): { day: string, weekday: string } {
-        const parsed = value.match(/-\s(.+),\s?(.+)/i)?.slice(1)
+        const parsed = value.match(/(.+),\s?(.+)/i)?.slice(1)
         if (!parsed) {
             throw new Error('could not parse day name')
         }
@@ -55,8 +55,8 @@ export abstract class AbstractParser {
             .trim()
     }
 
-    protected setNullIfEmpty(text?: string): string | null {
-        return (text === '' || text === undefined) ? null : text
+    protected setNullIfEmpty(text?: string | null): string | null {
+        return (text === '' || text == undefined) ? null : text
     }
 
     protected parseGroupNumber(text: string | undefined): string | undefined {
