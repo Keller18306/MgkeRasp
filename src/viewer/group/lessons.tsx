@@ -1,7 +1,7 @@
-import React from 'react'
-import { Day, GroupLessonExplain, Lesson } from '../parser/types';
+import React from "react";
+import { GroupLessonExplain, Lesson } from "../../parser/types";
 
-export default function StudentDayTable(day: Day) {
+export default function ViewerLessons({ lessons }: { lessons: Lesson[] }) {
     function lessonsParags(lessons: GroupLessonExplain[]) {
         return <React.Fragment>
             <td>
@@ -43,19 +43,7 @@ export default function StudentDayTable(day: Day) {
         </tr>
     }
 
-    return <table className='timetable-block'>
-        <tbody>
-            <tr className='center'>
-                <td colSpan={5}>{day.weekday}, {day.day}</td>
-            </tr>
-            <tr className='center'>
-                <td>№</td>
-                <td>Дисциплина</td>
-                <td>Вид</td>
-                <td>Аудитория</td>
-                <td>Преподаватель</td>
-            </tr>
-            {day.lessons.map((lesson, i) => lessonRow(lesson, i))}
-        </tbody>
-    </table>;
+    return <React.Fragment>
+        {lessons.map((lesson, i) => lessonRow(lesson, i))}
+    </React.Fragment>
 }

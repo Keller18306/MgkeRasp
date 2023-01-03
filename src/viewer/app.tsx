@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Groups } from "../parser/types";
-import GroupBlock from "./group";
 import Search from "./search";
+import GroupBlock from "./group";
 
 export default function ViewerApp({ groups }: { groups: Groups }) {
     const [searchValue, setSearchValue] = useState<string | undefined>()

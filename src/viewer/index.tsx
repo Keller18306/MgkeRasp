@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { Day, Group, GroupLessonExplain, Groups } from "../parser/types";
+import { Groups } from "../parser/types";
 import ViewerApp from "./app";
 
 type ViewerConfig = {

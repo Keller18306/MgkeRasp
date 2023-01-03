@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function ViewerSearch({ searchValue, setSearch }: { searchValue: string | undefined, setSearch: React.Dispatch<React.SetStateAction<string | undefined>> }) {
     return <div className="searchBlock">
