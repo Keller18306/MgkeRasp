@@ -1,29 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Groups } from "../parser/types";
-import Search from "./search";
-import GroupBlock from "./group";
+import React from "react";
+import { RouterProvider, Route } from "react-router";
+import { createHashRouter, createRoutesFromElements } from "react-router-dom";
+import Week from './week'
+import Blind from "./blind";
 
-export default function ViewerApp({ groups }: { groups: Groups }) {
-    const [searchValue, setSearchValue] = useState<string | undefined>()
+const router = createHashRouter(
+    createRoutesFromElements(<Route path="/">
+        <Route index element={<Week />} />
+        <Route path="week" element={<Week />} />
+        <Route path="blind" element={<Blind />} />
+    </Route>
+    )
+);
 
-    useEffect(() => {
-        const groupValue = localStorage.getItem('mgke-rasp_group')
-
-        if (groupValue) {
-            setSearchValue(groupValue)
-        }
-    }, []);
-
-    const blocks: JSX.Element[] = [];
-
-    for (const groupNumber in groups) {
-        if (searchValue && groupNumber !== searchValue) continue;
-
-        blocks.push(<GroupBlock groupNumber={groupNumber} group={groups[groupNumber]} />)
-    }
-
-    return <React.Fragment>
-        <Search searchValue={searchValue} setSearch={setSearchValue} />
-        {blocks}
-    </React.Fragment>;
+export default function ViewerApp(): JSX.Element {
+    return <RouterProvider router={router} />
 }

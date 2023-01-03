@@ -7,8 +7,8 @@ import Uploader from "./uploader"
 export default function BuilderApp() {
     const [groups, setGroups] = useState<Groups>({})
 
-    useEffect(() => {
-        const savedData = localStorage.getItem('savedGroups');
+    useEffect((): void => {
+        const savedData: string | null = localStorage.getItem('savedGroups');
 
         if (savedData) {
             setGroups(JSON.parse(savedData))

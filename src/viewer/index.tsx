@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { Groups } from "../parser/types";
 import ViewerApp from "./app";
 
@@ -8,7 +8,7 @@ type ViewerConfig = {
 }
 
 export class Viewer {
-    public static init(config: ViewerConfig) {
+    public static init(config: ViewerConfig): Viewer {
         return new this(config)
     }
 
@@ -25,9 +25,9 @@ export class Viewer {
         window.addEventListener('load', this.onLoad.bind(this));
     }
 
-    private async onLoad() {
+    private async onLoad(): Promise<void> {
         this.timetable = document.querySelector(this.outputSelector)
-        const rawJson = document.querySelector(this.inputSelector)?.textContent || null;
+        const rawJson: string | null = document.querySelector(this.inputSelector)?.textContent || null;
 
         if (!this.timetable) {
             console.error('Output selector is not found')
@@ -40,12 +40,13 @@ export class Viewer {
         }
 
         try {
-            this.groups = JSON.parse(rawJson)
+            this.groups = JSON.parse(rawJson);
+            (window as any).PAGE_GROUPS = this.groups;
         } catch (e) {
             console.error('cannot parse json block', e)
             return;
         }
 
-        ReactDOM.render(<ViewerApp groups={this.groups} />, this.timetable);
+        ReactDOM.createRoot(this.timetable).render(<ViewerApp />);
     }
 }

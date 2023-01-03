@@ -15,7 +15,7 @@ export function readFile(file: File, encoding?: string): Promise<string> {
 export function chunkArray<T>(array: T[], size: number): T[][] {
     const chunks: T[][] = [];
 
-    for (let chunkId = 0; chunkId < Math.ceil(array.length / size); chunkId++) {
+    for (let chunkId: number = 0; chunkId < Math.ceil(array.length / size); chunkId++) {
         const chunk: any[] = [];
 
         for (let item = 0; item < size; item++) {

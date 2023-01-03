@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import BuilderApp from './app'
 
 export class Builder {
@@ -12,6 +12,6 @@ export class Builder {
     }
 
     private onLoad() {
-        ReactDOM.render(<BuilderApp />, document.getElementById("root"));
+        ReactDOM.createRoot(document.getElementById("root")!).render(<BuilderApp />);
     }
 }

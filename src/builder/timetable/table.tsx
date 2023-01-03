@@ -1,24 +1,24 @@
 import React from "react";
-import { Group } from "../../parser/types";
+import { Day, Group } from "../../parser/types";
 import Days from "./days";
 
-export default function BuilderTable({ group }: { group: Group }) {
+export default function BuilderTable({ group }: { group: Group }): JSX.Element {
     return <table>
         <tbody>
             <tr>
                 <td rowSpan={3}>№</td>
-                {group.days.map((day) => {
-                    return <td colSpan={4}>{day.day}</td>
+                {group.days.map((day: Day, i: number): JSX.Element => {
+                    return <td key={i} colSpan={4}>{day.day}</td>
                 })}
             </tr>
             <tr>
-                {group.days.map((day) => {
-                    return <td colSpan={4}>{day.weekday}</td>
+                {group.days.map((day: Day, i: number): JSX.Element => {
+                    return <td key={i} colSpan={4}>{day.weekday}</td>
                 })}
             </tr>
             <tr>
-                {group.days.map(() => {
-                    return <React.Fragment>
+                {group.days.map((day: Day, i: number): JSX.Element => {
+                    return <React.Fragment key={i}>
                         <td>Дисциплина</td>
                         <td>Вид</td>
                         <td>Ауд.</td>
@@ -26,7 +26,7 @@ export default function BuilderTable({ group }: { group: Group }) {
                     </React.Fragment>
                 })}
             </tr>
-            <Days days={group.days} /> 
+            <Days days={group.days} />
         </tbody>
     </table>
 }
