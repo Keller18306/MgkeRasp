@@ -14,7 +14,7 @@
             border-collapse: separate;
             border-spacing: 0;
         }
-        
+
         .mgke-timetable table {
             border: 0
         }
@@ -24,24 +24,14 @@
             padding-bottom: 3px;
         }
     </style>
-    
+
     <script>
         KellerMGKE.Builder.init()
     </script>
 </head>
 
 <body>
-    <div class="mgke-uploader">
-        <form class="mgke-uploader-form">
-            <input type="file" name="files" accept=".html" multiple>
-            <input type="button" name="copy-html" value="Скопировать как HTML блок для вставки на сайт" />
-        </form>
-        <div class="mgke-uploader-message">
-
-        </div>
-    </div>
-    <div class="mgke-debug"></div>
-    <div class="mgke-timetable"></div>
+    <div id="root"></div>
 </body>
 
 </html>
