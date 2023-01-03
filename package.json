@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve --open --config webpack.config.js",
+    "dev": "webpack serve --open --config webpack.dev.config.js",
     "build": "webpack --config webpack.config.js"
   },
   "author": "Keller",
