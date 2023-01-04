@@ -20,6 +20,15 @@ export default function ViewerDay(): JSX.Element {
         }
     }, []);
 
+    const blocks: JSX.Element[] = [];
+
+    for (const groupNumber in groups) {
+        if (searchValue && groupNumber !== searchValue) continue;
+        const group: Group = groups[groupNumber];
+
+        blocks.push(<ViewerGroup key={groupNumber} group={group.group} day={getTodayDay(group.days)} />)
+    }
+
     const day: Day = getTodayDay(Object.values(groups)[0].days);
 
     return <React.Fragment>
@@ -27,11 +36,9 @@ export default function ViewerDay(): JSX.Element {
             <h1>Расписание на день - {day.weekday}, {day.day}</h1>
             <Search searchValue={searchValue} setSearch={setSearchValue} />
         </Header>
-        
-        <div className="timetable-grid">
-            {Object.values(groups).map(
-                (group: Group, i: number): JSX.Element => <ViewerGroup key={i} group={group.group} day={getTodayDay(group.days)} />
-            )}
+
+        <div className="timetable-grid row">
+            {blocks}
         </div>
     </React.Fragment>;
 }
