@@ -13,7 +13,7 @@ export default function BuilderUploader({ groups, setGroups }: { groups: Groups,
         for (const file of Array.from(files)) {
             const content = await readFile(file, 'windows-1251');
 
-            const iframe: HTMLIFrameElement = await createIframe(document, content, true);
+            const iframe: HTMLIFrameElement = await createIframe(document.body, content, true);
 
             if (!iframe.contentWindow || !iframe.contentDocument) {
                 console.error('could load iframe')
