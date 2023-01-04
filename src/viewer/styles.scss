@@ -1,0 +1,48 @@
+.mgke-timetable {
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    table.current-day,
+    table.current-day th,
+    table.current-day td {
+        border: 2px solid black;
+    }
+
+    div {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .timetable-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex-start;
+        font-size: 14px;
+        row-gap: 20px;
+        column-gap: 10px;
+    }
+
+    .timetable-block {
+        flex: 1 1 0;
+        min-width: 30%;
+    }
+
+    td p {
+        margin: 5px 2px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+}

@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Day, Group, Groups } from "../../parser/types";
-import Search from "../search";
+import Search from "../common/search";
 import { getTodayDay } from "../utils";
 import ViewerGroup from "./group";
+import Header from "../common/header";
 
 export default function ViewerDay(): JSX.Element {
     const groups = useMemo<Groups>((): Groups => {
@@ -22,8 +23,11 @@ export default function ViewerDay(): JSX.Element {
     const day: Day = getTodayDay(Object.values(groups)[0].days);
 
     return <React.Fragment>
-        <h1>Расписание на день - {day.weekday}, {day.day}</h1>
-        <Search searchValue={searchValue} setSearch={setSearchValue} />
+        <Header>
+            <h1>Расписание на день - {day.weekday}, {day.day}</h1>
+            <Search searchValue={searchValue} setSearch={setSearchValue} />
+        </Header>
+        
         <div className="timetable-grid">
             {Object.values(groups).map(
                 (group: Group, i: number): JSX.Element => <ViewerGroup key={i} group={group.group} day={getTodayDay(group.days)} />

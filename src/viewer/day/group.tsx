@@ -1,5 +1,5 @@
-import { Day } from '../../../parser/types';
-import Lessons from './lessons';
+import { Day } from '../../parser/types';
+import Lessons from '../common/lessons';
 
 export default function ViewerGroup({ group, day }: { group: string, day: Day }): JSX.Element {
     return <table className='timetable-block'>

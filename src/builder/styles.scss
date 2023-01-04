@@ -1,0 +1,18 @@
+.mgke-timetable.builder {
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    table {
+        border: 0
+    }
+
+    div {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+}

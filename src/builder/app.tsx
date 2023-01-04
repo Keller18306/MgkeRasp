@@ -4,7 +4,7 @@ import Exporter from "./exporter"
 import Timetable from "./timetable"
 import Uploader from "./uploader"
 
-import './styles.css';
+import './styles.scss'
 
 export default function BuilderApp() {
     const [groups, setGroups] = useState<Groups>({})
@@ -17,9 +17,9 @@ export default function BuilderApp() {
         }
     }, []);
 
-    return <React.Fragment>
+    return <div className=".mgke-timetable .builder">
         <Uploader groups={groups} setGroups={setGroups} />
         <Exporter groups={groups} />
         <Timetable groups={groups} />
-    </React.Fragment>
+    </div>
 }

@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Groups } from "../../parser/types";
-import Search from "../search";
+import Search from "../common/search";
 import GroupBlock from "./block";
+import Header from "../common/header";
 
 export default function ViewerWeek(): JSX.Element {
     const groups = useMemo<Groups>(() => {
@@ -27,8 +28,11 @@ export default function ViewerWeek(): JSX.Element {
     }
 
     return <React.Fragment>
-        <h1>Расписание на неделю</h1>
-        <Search searchValue={searchValue} setSearch={setSearchValue} />
+        <Header>
+            <h1>Расписание на неделю</h1>
+            <Search searchValue={searchValue} setSearch={setSearchValue} />
+        </Header>
+        
         {blocks}
     </React.Fragment>;
 }
