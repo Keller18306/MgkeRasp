@@ -4,7 +4,7 @@ import { GroupLessonExplain, Lesson } from "../../parser/types";
 export default function ViewerLessons({ lessons }: { lessons: Lesson[] }): JSX.Element {
     function lessonsParags(lessons: GroupLessonExplain[]): JSX.Element {
         return <React.Fragment>
-            <td>
+            <td className="left">
                 {lessons.map((lesson: GroupLessonExplain, i: number): JSX.Element => {
                     return <p key={i}>{lesson.subgroup ? `${lesson.subgroup}. ` : ''}{lesson.lesson}</p>
                 })}
@@ -19,7 +19,7 @@ export default function ViewerLessons({ lessons }: { lessons: Lesson[] }): JSX.E
                     return <p key={i}>{lesson.cabinet || '-'}</p>
                 })}
             </td>
-            <td>
+            <td className="left">
                 {lessons.map((lesson: GroupLessonExplain, i: number): JSX.Element => {
                     return <p key={i}>{lesson.teacher}</p>
                 })}
