@@ -4,6 +4,8 @@ import Exporter from "./exporter"
 import Timetable from "./timetable"
 import Uploader from "./uploader"
 
+import './styles.css';
+
 export default function BuilderApp() {
     const [groups, setGroups] = useState<Groups>({})
 

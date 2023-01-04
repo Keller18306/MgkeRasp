@@ -6,6 +6,8 @@ import Blind from "./blind";
 import Day from './day'
 import Viewer404 from "./404";
 
+import './styles.css';
+
 const router = createHashRouter(
     createRoutesFromElements(<Route path="/" errorElement={<Viewer404/>}>
         <Route index element={<Week />} />
