@@ -27,6 +27,7 @@ export default function ViewerWeek(): JSX.Element {
     }
 
     return <React.Fragment>
+        <h1>Расписание на неделю</h1>
         <Search searchValue={searchValue} setSearch={setSearchValue} />
         {blocks}
     </React.Fragment>;

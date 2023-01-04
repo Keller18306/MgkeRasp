@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
-import { Group, Groups } from "../../parser/types";
+import { Day, Group, Groups } from "../../parser/types";
 import BlindGroup from "./group";
-import { getTodayDay, getTodayString } from "../utils";
+import { getTodayDay } from "../utils";
 
 export default function ViewerBlind(): JSX.Element {
-    const groups = useMemo<Groups>(() => {
+    const groups = useMemo<Groups>((): Groups => {
         const groups: Groups = (window as any).PAGE_GROUPS;
 
         const blindGroups: Groups = {}
@@ -19,10 +19,11 @@ export default function ViewerBlind(): JSX.Element {
         return blindGroups;
     }, []);
 
-    const day: string = getTodayString(Object.values(groups)[0].days);
+    const day: Day = getTodayDay(Object.values(groups)[0].days);
 
     return <React.Fragment>
-        <h1>День - {day}</h1>
+        <h1>Расписание для слабовидящих</h1>
+        <h2>День - {day.weekday}, {day.day}</h2>
         {Object.values(groups).map(
             (group: Group, i: number): JSX.Element => <BlindGroup key={i} group={group.group} lessons={getTodayDay(group.days).lessons} />
         )}

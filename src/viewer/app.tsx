@@ -3,11 +3,13 @@ import { RouterProvider, Route } from "react-router";
 import { createHashRouter, createRoutesFromElements } from "react-router-dom";
 import Week from './week'
 import Blind from "./blind";
+import Day from './day'
 
 const router = createHashRouter(
     createRoutesFromElements(<Route path="/">
         <Route index element={<Week />} />
         <Route path="week" element={<Week />} />
+        <Route path="day" element={<Day />} />
         <Route path="blind" element={<Blind />} />
     </Route>
     )
