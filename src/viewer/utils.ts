@@ -4,8 +4,8 @@ function todayDate(): string {
     const date = new Date();
 
     return [
-        date.getDay().toString().padStart(2, '0'),
-        date.getMonth().toString().padStart(2, '0'),
+        (date.getDay() + 1).toString().padStart(2, '0'),
+        (date.getMonth() + 1).toString().padStart(2, '0'),
         date.getFullYear()
     ].join('.')
 }
