@@ -2,7 +2,7 @@ import { Day } from '../../../parser/types';
 import Lessons from '../../common/lessons';
 
 export default function StudentDayTable({ day }: { day: Day }): JSX.Element {
-    return <div className='col-lg-6'>
+    return <div className='col-lg-6 col-sm-12'>
         <table className='timetable-block'>
             <tbody>
                 <tr className='center'>
