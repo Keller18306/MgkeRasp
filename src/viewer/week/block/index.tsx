@@ -5,7 +5,7 @@ export default function ViewerBlock({ groupNumber, group }: { groupNumber: strin
     return <div className="group-block" data-group={groupNumber}>
         <h2>Группа - {group.group}</h2>
 
-        <div className="timetable-grid">
+        <div className="timetable-grid row">
             {group.days.map((day: Day, i: number): JSX.Element => <StudentDayTable key={i} day={day} />)}
         </div>
     </div>;
