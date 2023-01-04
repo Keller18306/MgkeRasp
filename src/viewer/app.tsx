@@ -4,9 +4,10 @@ import { createHashRouter, createRoutesFromElements } from "react-router-dom";
 import Week from './week'
 import Blind from "./blind";
 import Day from './day'
+import Viewer404 from "./404";
 
 const router = createHashRouter(
-    createRoutesFromElements(<Route path="/">
+    createRoutesFromElements(<Route path="/" errorElement={<Viewer404/>}>
         <Route index element={<Week />} />
         <Route path="week" element={<Week />} />
         <Route path="day" element={<Day />} />
