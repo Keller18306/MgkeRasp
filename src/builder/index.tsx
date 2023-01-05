@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import BuilderApp from './app'
 
 export class Builder {
-    public static init() {
+    public static init(): Builder {
         return new this()
     }
 

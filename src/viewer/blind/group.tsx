@@ -1,10 +1,9 @@
-import React from "react";
-import { Lesson } from "../../parser/types";
+import { GroupLesson } from "../../parser/types/group";
 
-export default function BlindGroup({ group, lessons }: { group: string, lessons: Lesson[] }): JSX.Element {
+export default function BlindGroup({ group, lessons }: { group: string, lessons: GroupLesson[] }): JSX.Element {
     return <div>
         <h2>Группа {group}</h2>
-        {lessons.map((lesson: Lesson, i: number): JSX.Element | null => {
+        {lessons.map((lesson: GroupLesson, i: number): JSX.Element | null => {
             if (!lesson) {
                 return null;
             }

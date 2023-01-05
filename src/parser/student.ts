@@ -1,6 +1,6 @@
 import { chunkArray } from "../builder/utils";
 import { AbstractParser } from "./abstract";
-import { Day, GroupLessonExplain, Groups, Lesson } from './types';
+import { GroupDay, GroupLessonExplain, Groups, GroupLesson } from './types/group';
 
 type GroupPosition = {
     group: string,
@@ -27,7 +27,82 @@ export default class StudentParser extends AbstractParser {
         return this.groups
     }
 
-    protected parseLesson(lessonCell: HTMLTableCellElement, cabinetCell: HTMLTableCellElement): Lesson {
+    protected parseGroup(table: HTMLTableElement, h2: HTMLHeadingElement) {
+        const group = h2.textContent?.replaceAll(' ', '').split('-')[1]
+        const groupNumber = Number(this.parseGroupNumber(
+            h2.textContent?.replaceAll(' ', '')
+                .split('-')[1]
+        ))
+        if (!group || isNaN(groupNumber)) throw new Error('can not get group number')
+
+        const rows = Array.from(table.rows)
+
+        const days: GroupDay[] = this.getDays(rows[0]);
+        this.parseLessons(rows, days);
+        for (const { lessons } of days) {
+            this.clearEndingNull(lessons);
+        }
+
+        this.groups[groupNumber] = {
+            group: group,
+            days: days
+        }
+    }
+
+    protected getDays(row: HTMLTableRowElement): GroupDay[] {
+        const days: GroupDay[] = []
+
+        const dayNames = this.parseDayNames(row)
+        for (const dayName of dayNames) {
+            const { day, weekday } = this.parseDayName(dayName)
+
+            days.push({
+                day: day,
+                weekday: weekday,
+                lessons: []
+            })
+        }
+
+        return days
+    }
+
+    protected parseDayNames(row: HTMLTableRowElement): string[] {
+        const cells = Array.from(row.cells)
+
+        const days: string[] = []
+
+        for (const cell_i in cells) {
+            if (+cell_i == 0) continue;
+            const cell = cells[cell_i]
+
+            const day = cell.textContent?.replaceAll('\n', '')
+            if (day == undefined) throw new Error('cannot get weekday name');
+
+            days.push(day)
+        }
+
+        return days;
+    }
+
+    protected parseLessons(rows: HTMLTableRowElement[], days: GroupDay[]) {
+        for (const row_i in rows) {
+            if (+row_i <= 1) continue;
+            const row = rows[row_i]
+            const cells = row.cells
+
+            for (let cell_i: number = 1; cell_i < Math.floor(cells.length / 2); cell_i++) {
+                const day = cell_i - 1;
+
+                const lessonCell = cells[cell_i * 2 - 1];
+                const cabinetCell = cells[cell_i * 2];
+
+                const lesson = this.parseLesson(lessonCell, cabinetCell);
+                days[day].lessons.push(lesson)
+            }
+        }
+    }
+
+    protected parseLesson(lessonCell: HTMLTableCellElement, cabinetCell: HTMLTableCellElement): GroupLesson {
         let lesson: string | undefined | null = lessonCell.textContent?.trim();
         let cabinet: string | undefined | null = cabinetCell.textContent?.trim();
 
@@ -74,98 +149,6 @@ export default class StudentParser extends AbstractParser {
             type: matchType,
             teacher: group[2],
             cabinet: cabinet
-        }
-    }
-
-    protected clearEndingNull(lessons: Lesson[]) {
-        let toClear: number = 0;
-
-        for (const lesson of lessons) {
-            if (lesson === null) {
-                toClear++
-                continue;
-            }
-
-            toClear = 0
-        }
-
-        lessons.splice(lessons.length - toClear, toClear)
-    }
-
-    //-------------------------------------------
-
-    protected parseGroup(table: HTMLTableElement, h2: HTMLHeadingElement) {
-        const group = h2.textContent?.replaceAll(' ', '').split('-')[1]
-        const groupNumber = Number(this.parseGroupNumber(
-            h2.textContent?.replaceAll(' ', '')
-                .split('-')[1]
-        ))
-        if (!group || isNaN(groupNumber)) throw new Error('can not get group number')
-
-        const rows = Array.from(table.rows)
-
-        const days: Day[] = this.getDays(rows[0]);
-        this.parseLessons(rows, days);
-        for (const { lessons } of days) {
-            this.clearEndingNull(lessons);
-        }
-
-        this.groups[groupNumber] = {
-            group: group,
-            days: days
-        }
-    }
-
-    protected getDays(row: HTMLTableRowElement): Day[] {
-        const days: Day[] = []
-
-        const dayNames = this.parseDayNames(row)
-        for (const dayName of dayNames) {
-            const { day, weekday } = this.parseDayName(dayName)
-
-            days.push({
-                day: day,
-                weekday: weekday,
-                lessons: []
-            })
-        }
-
-        return days
-    }
-
-    protected parseDayNames(row: HTMLTableRowElement): string[] {
-        const cells = Array.from(row.cells)
-
-        const days: string[] = []
-
-        for (const cell_i in cells) {
-            if (+cell_i == 0) continue;
-            const cell = cells[cell_i]
-
-            const day = cell.textContent?.replaceAll('\n', '')
-            if (day == undefined) throw new Error('cannot get weekday name');
-
-            days.push(day)
-        }
-
-        return days;
-    }
-
-    protected parseLessons(rows: HTMLTableRowElement[], days: Day[]) {
-        for (const row_i in rows) {
-            if (+row_i <= 1) continue;
-            const row = rows[row_i]
-            const cells = row.cells
-
-            for (let cell_i: number = 1; cell_i < Math.floor(cells.length / 2); cell_i++) {
-                const day = cell_i - 1;
-
-                const lessonCell = cells[cell_i * 2 - 1];
-                const cabinetCell = cells[cell_i * 2];
-
-                const lesson = this.parseLesson(lessonCell, cabinetCell);
-                days[day].lessons.push(lesson)
-            }
         }
     }
 }

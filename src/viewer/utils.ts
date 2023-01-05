@@ -1,4 +1,4 @@
-import { Day } from "../parser/types";
+import { GroupDay } from "../parser/types/group";
 
 function todayDate(): string {
     const date = new Date();
@@ -14,10 +14,10 @@ function todayDate(): string {
  * 
  * @description Возвращает текущий день из всех дней. Или же самый последний, если ничего не найдено
  */
-export function getTodayDay(days: Day[]): Day {
+export function getTodayDay(days: GroupDay[]): GroupDay {
     const date: string = todayDate()
 
-    const day: Day | undefined = days.find(_ => _.day === date);
+    const day: GroupDay | undefined = days.find(_ => _.day === date);
 
     return day || days[days.length - 1];
 }
@@ -26,11 +26,11 @@ export function getTodayDay(days: Day[]): Day {
  * 
  * @description Возвращает текущий день из всех дней. Или же самый последний, если ничего не найдено в виде строки
  */
-export function getTodayString(days: Day[]): string {
+export function getTodayString(days: GroupDay[]): string {
     const date: string = todayDate()
 
-    const lday: Day | undefined = days.find(_ => _.day === date);
-    const cday: Day = lday || days[days.length - 1];
+    const lday: GroupDay | undefined = days.find(_ => _.day === date);
+    const cday: GroupDay = lday || days[days.length - 1];
 
     return `${cday.weekday}, ${cday.day}`;
 }

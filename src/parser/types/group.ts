@@ -4,16 +4,16 @@ export type Groups = {
 
 export type Group = {
     group: string,
-    days: Day[]
+    days: GroupDay[]
 }
 
-export type Day = {
+export type GroupDay = {
     day: string,
     weekday: string,
-    lessons: Lesson[]
+    lessons: GroupLesson[]
 }
 
-export type Lesson = GroupLessonExplain | GroupLessonExplain[] | null
+export type GroupLesson = GroupLessonExplain | GroupLessonExplain[] | null
 
 export type GroupLessonExplain = {
     subgroup?: number

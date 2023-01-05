@@ -1,7 +1,7 @@
 import React from "react";
-import { GroupLessonExplain, Lesson } from "../../parser/types";
+import { GroupLessonExplain, GroupLesson } from "../../parser/types/group";
 
-export default function ViewerLessons({ lessons }: { lessons: Lesson[] }): JSX.Element {
+export default function ViewerLessons({ lessons }: { lessons: GroupLesson[] }): JSX.Element {
     function lessonsParags(lessons: GroupLessonExplain[]): JSX.Element {
         return <React.Fragment>
             <td className="left">
@@ -27,7 +27,7 @@ export default function ViewerLessons({ lessons }: { lessons: Lesson[] }): JSX.E
         </React.Fragment>;
     }
 
-    function lessonRow(lesson: Lesson, i: number): JSX.Element {
+    function lessonRow(lesson: GroupLesson, i: number): JSX.Element {
         if (!lesson) {
             return <tr key={i}>
                 <td className='center'>{i + 1}</td>
@@ -44,6 +44,6 @@ export default function ViewerLessons({ lessons }: { lessons: Lesson[] }): JSX.E
     }
 
     return <React.Fragment>
-        {lessons.map((lesson: Lesson, i: number): JSX.Element => lessonRow(lesson, i))}
+        {lessons.map((lesson: GroupLesson, i: number): JSX.Element => lessonRow(lesson, i))}
     </React.Fragment>
 }

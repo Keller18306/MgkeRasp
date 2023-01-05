@@ -1,5 +1,7 @@
 import ReactDOM from "react-dom/client";
-import { Groups } from "../parser/types";
+import gzip from 'gzip-js'
+import { Buffer } from 'buffer'
+import { Groups } from "../parser/types/group";
 import ViewerApp from "./app";
 
 type ViewerConfig = {
@@ -27,20 +29,21 @@ export class Viewer {
 
     private async onLoad(): Promise<void> {
         this.timetable = document.querySelector(this.outputSelector)
-        const rawJson: string | null = document.querySelector(this.inputSelector)?.textContent || null;
+        const rawData: string | null = document.querySelector(this.inputSelector)?.textContent || null;
 
         if (!this.timetable) {
             console.error('Output selector is not found')
             return;
         }
 
-        if (!rawJson) {
+        if (!rawData) {
             console.error('Input selector is not found')
             return;
         }
 
         try {
-            this.groups = JSON.parse(rawJson);
+            const json = Buffer.from(gzip.unzip(Buffer.from(rawData, 'base64'))).toString()
+            this.groups = JSON.parse(json);
             (window as any).PAGE_GROUPS = this.groups;
         } catch (e) {
             console.error('cannot parse json block', e)

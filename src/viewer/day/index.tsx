@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Day, Group, Groups } from "../../parser/types";
+import { GroupDay, Group, Groups } from "../../parser/types/group";
+import Header from "../common/header";
 import Search from "../common/search";
 import { getTodayDay } from "../utils";
 import ViewerGroup from "./group";
-import Header from "../common/header";
 
 export default function ViewerDay(): JSX.Element {
     const groups = useMemo<Groups>((): Groups => {
-        return (window as any).PAGE_GROUPS;
+        return (window as any).PAGE_GROUPS.groups;
     }, []);
 
     const [searchValue, setSearchValue] = useState<string | undefined>()
@@ -29,7 +29,7 @@ export default function ViewerDay(): JSX.Element {
         blocks.push(<ViewerGroup key={groupNumber} group={group.group} day={getTodayDay(group.days)} />)
     }
 
-    const day: Day = getTodayDay(Object.values(groups)[0].days);
+    const day: GroupDay = getTodayDay(Object.values(groups)[0].days);
 
     return <React.Fragment>
         <Header>

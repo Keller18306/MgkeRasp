@@ -18,8 +18,8 @@ export function chunkArray<T>(array: T[], size: number): T[][] {
     for (let chunkId: number = 0; chunkId < Math.ceil(array.length / size); chunkId++) {
         const chunk: any[] = [];
 
-        for (let item = 0; item < size; item++) {
-            const i = chunkId * size + item;
+        for (let item: number = 0; item < size; item++) {
+            const i: number = chunkId * size + item;
             chunk.push(array[i])
         }
 

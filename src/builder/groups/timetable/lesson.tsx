@@ -1,8 +1,8 @@
 import React from "react";
-import { GroupLessonExplain, Lesson } from "../../parser/types";
+import { GroupLessonExplain, GroupLesson } from "../../../parser/types/group";
 import Parags from "./parags";
 
-export default function BuilderLesson({ lesson }: { lesson: Lesson }): JSX.Element {
+export default function BuilderLesson({ lesson }: { lesson: GroupLesson }): JSX.Element {
     if (!lesson) {
         return <td colSpan={4} />;
     }

@@ -1,8 +1,8 @@
-import React, { ChangeEvent } from "react"
-import { readFile } from "./utils";
-import { Groups } from "../parser/types";
-import { createIframe } from "./iframe";
-import StudentParser from "../parser/student";
+import React, { ChangeEvent } from "react";
+import StudentParser from "../../parser/student";
+import { Groups } from "../../parser/types/group";
+import { createIframe } from "../iframe";
+import { readFile } from "../utils";
 
 export default function BuilderUploader({ groups, setGroups }: { groups: Groups, setGroups: React.Dispatch<React.SetStateAction<Groups>> }): JSX.Element {
     async function onSelectFiles(e: ChangeEvent<HTMLInputElement>): Promise<void> {
@@ -11,7 +11,7 @@ export default function BuilderUploader({ groups, setGroups }: { groups: Groups,
 
         setGroups({})
         for (const file of Array.from(files)) {
-            const content = await readFile(file, 'windows-1251');
+            const content: string = await readFile(file, 'windows-1251');
 
             const iframe: HTMLIFrameElement = await createIframe(document.body, content, true);
 

@@ -1,4 +1,5 @@
-import { GroupLessonExplain } from "./types";
+import { GroupLesson, GroupLessonExplain } from "./types/group";
+import { TeacherLesson } from "./types/teacher";
 
 export abstract class AbstractParser {
     protected readonly window: Window;
@@ -102,6 +103,21 @@ export abstract class AbstractParser {
         }
 
         return parsed
+    }
+
+    protected clearEndingNull<T extends GroupLesson | TeacherLesson>(lessons: T[]): void {
+        let toClear: number = 0;
+
+        for (const lesson of lessons) {
+            if (lesson === null) {
+                toClear++
+                continue;
+            }
+
+            toClear = 0
+        }
+
+        lessons.splice(lessons.length - toClear, toClear)
     }
 
     abstract run(): object

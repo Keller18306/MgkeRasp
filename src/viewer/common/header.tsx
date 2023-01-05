@@ -1,7 +1,7 @@
-import React, { PropsWithChildren, ReactPropTypes } from "react";
-import { Link, NavLink, Navigate } from "react-router-dom";
+import React, { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 
-export default function ViewerHeader({ children }: PropsWithChildren) {
+export default function ViewerHeader({ children }: PropsWithChildren): JSX.Element {
     return <div className="header">
         <div className="content">{children}</div>
         <div className="navbar">

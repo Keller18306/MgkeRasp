@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Groups } from "../../parser/types";
+import { Groups } from "../../parser/types/group";
+import Header from "../common/header";
 import Search from "../common/search";
 import GroupBlock from "./block";
-import Header from "../common/header";
 
 export default function ViewerWeek(): JSX.Element {
     const groups = useMemo<Groups>(() => {
-        return (window as any).PAGE_GROUPS;
+        return (window as any).PAGE_GROUPS.groups;
     }, []);
 
     const [searchValue, setSearchValue] = useState<string | undefined>()
@@ -32,7 +32,7 @@ export default function ViewerWeek(): JSX.Element {
             <h1>Расписание на неделю</h1>
             <Search searchValue={searchValue} setSearch={setSearchValue} />
         </Header>
-        
+
         {blocks}
     </React.Fragment>;
 }

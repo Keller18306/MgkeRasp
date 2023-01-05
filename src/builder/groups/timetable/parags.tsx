@@ -1,5 +1,5 @@
 import React from "react";
-import { GroupLessonExplain } from "../../parser/types";
+import { GroupLessonExplain } from "../../../parser/types/group";
 
 export default function BuilderParags({ explain }: { explain: GroupLessonExplain[] }): JSX.Element {
     return <React.Fragment>

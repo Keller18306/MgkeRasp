@@ -1,7 +1,7 @@
-import { Day } from '../../../parser/types';
+import { GroupDay } from '../../../parser/types/group';
 import Lessons from '../../common/lessons';
 
-export default function StudentDayTable({ day }: { day: Day }): JSX.Element {
+export default function StudentDayTable({ day }: { day: GroupDay }): JSX.Element {
     return <div className='col-lg-6 col-sm-12'>
         <table className='timetable-block'>
             <tbody>
