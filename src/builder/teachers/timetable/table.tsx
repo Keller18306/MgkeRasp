@@ -1,6 +1,6 @@
 import React from "react";
 import { TeacherDay, Teacher } from "../../../parser/types/teacher";
-import Days from "./days";
+import Days from "./lessons";
 
 export default function BuilderTable({ days }: { days: TeacherDay[] }): JSX.Element {
     return <table>

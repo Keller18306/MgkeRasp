@@ -1,5 +1,5 @@
 import React from "react";
-import { GroupLessonExplain, GroupLesson } from "../../parser/types/group";
+import { GroupLesson, GroupLessonExplain } from "../../../parser/types/group";
 
 export default function ViewerLessons({ lessons }: { lessons: GroupLesson[] }): JSX.Element {
     function lessonsParags(lessons: GroupLessonExplain[]): JSX.Element {

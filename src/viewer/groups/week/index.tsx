@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Groups } from "../../parser/types/group";
-import Header from "../common/header";
-import Search from "../common/search";
+import { Groups } from "../../../parser/types/group";
+import Search from "../../groups/common/search";
+import Header from "../../header";
 import GroupBlock from "./block";
 
 export default function ViewerWeek(): JSX.Element {
@@ -29,7 +29,7 @@ export default function ViewerWeek(): JSX.Element {
 
     return <React.Fragment>
         <Header>
-            <h1>Расписание на неделю</h1>
+            <h1>Расписание групп на неделю</h1>
             <Search searchValue={searchValue} setSearch={setSearchValue} />
         </Header>
 

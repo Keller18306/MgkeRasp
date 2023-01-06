@@ -1,4 +1,4 @@
-import { GroupDay, Group } from "../../../parser/types/group";
+import { GroupDay, Group } from "../../../../parser/types/group";
 import StudentDayTable from "./table";
 
 export default function ViewerBlock({ groupNumber, group }: { groupNumber: string, group: Group }): JSX.Element {

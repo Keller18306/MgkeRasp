@@ -1,6 +1,6 @@
 import React from "react";
 import { GroupDay, Group } from "../../../parser/types/group";
-import Days from "./days";
+import Days from "./lessons";
 
 export default function BuilderTable({ days }: { days: GroupDay[] }): JSX.Element {
     return <table>

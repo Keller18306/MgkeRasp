@@ -1,4 +1,4 @@
-import { GroupLesson } from "../../parser/types/group";
+import { GroupLesson } from "../../../parser/types/group";
 
 export default function BlindGroup({ group, lessons }: { group: string, lessons: GroupLesson[] }): JSX.Element {
     return <div>

@@ -2,7 +2,7 @@ import React from "react";
 import { GroupDay } from "../../../parser/types/group";
 import Lesson from "./lesson";
 
-export default function BuilderDays({ days }: { days: GroupDay[] }): JSX.Element {
+export default function BuilderLessons({ days }: { days: GroupDay[] }): JSX.Element {
     const maxCountLessons: number = Math.max(...days.map((day: GroupDay): number => {
         return day.lessons.length
     }));

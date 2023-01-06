@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { GroupDay, Group, Groups } from "../../parser/types/group";
-import Header from "../common/header";
+import { Group, GroupDay, Groups } from "../../../parser/types/group";
+import Header from "../../header";
+import { getTodayDay } from "../../utils";
 import Search from "../common/search";
-import { getTodayDay } from "../utils";
 import ViewerGroup from "./group";
 
 export default function ViewerDay(): JSX.Element {
@@ -33,7 +33,7 @@ export default function ViewerDay(): JSX.Element {
 
     return <React.Fragment>
         <Header>
-            <h1>Расписание на день - {day.weekday}, {day.day}</h1>
+            <h1>Расписание групп на день - {day.weekday}, {day.day}</h1>
             <Search searchValue={searchValue} setSearch={setSearchValue} />
         </Header>
 
