@@ -1,23 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Groups } from "../../parser/types/group";
-import Exporter from "./exporter";
 import Timetable from "./timetable";
 import Uploader from "./uploader";
 
-export default function BuilderGroups(): JSX.Element {
-    const [groups, setGroups] = useState<Groups>({})
-
-    useEffect((): void => {
-        const savedData: string | null = localStorage.getItem('savedGroups');
-
-        if (savedData) {
-            setGroups(JSON.parse(savedData))
-        }
-    }, []);
-
+export default function BuilderGroups({ groups, setGroups }: { groups: Groups, setGroups: React.Dispatch<React.SetStateAction<Groups>> }): JSX.Element {
     return <React.Fragment>
-        <Uploader groups={groups} setGroups={setGroups} />
-        <Exporter groups={groups} />
+        <Uploader setGroups={setGroups} />
         <Timetable groups={groups} />
     </React.Fragment>
 }
