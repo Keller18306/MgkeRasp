@@ -11,7 +11,7 @@ export default function BuilderLessons({ days }: { days: GroupDay[] }): JSX.Elem
     for (let i: number = 0; i < maxCountLessons; i++) {
         lines.push(<tr key={i}>
             <td>{i + 1}</td>
-            {days.map((day: GroupDay, i: number): JSX.Element => <Lesson key={i} lesson={day.lessons[i]} />)}
+            {days.map((day: GroupDay, j: number): JSX.Element => <Lesson key={j} lesson={day.lessons[i]} />)}
         </tr>)
     }
 

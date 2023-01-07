@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Teachers } from "../../../parser/types/teacher";
-import Search from "../../groups/common/search";
+import Search from "../search";
 import Header from "../../header";
 import TeacherBlock from "./block";
 
@@ -22,7 +22,7 @@ export default function ViewerWeek(): JSX.Element {
     const blocks: JSX.Element[] = [];
 
     for (const teacherName in teachers) {
-        if (searchValue && !teacherName.startsWith(searchValue)) continue;
+        if (searchValue && !teacherName.toLowerCase().startsWith(searchValue.toLowerCase())) continue;
 
         blocks.push(<TeacherBlock key={teacherName} teacher={teachers[teacherName]} />)
     }
