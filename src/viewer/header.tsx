@@ -12,28 +12,32 @@ export default function ViewerHeader({ children }: PropsWithChildren): JSX.Eleme
                         <li className="active parent">
                             <Link to="/">Расписание занятий</Link>
                             <ul className="level_1">
-                                <Link to="/groups/">Для групп</Link>
-                                <ul className="level_1">
-                                    <li>
-                                        <Link to="/groups/week">На неделю</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/groups/day">На день</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/groups/blind">Для слабовидящих</Link>
-                                    </li>
-                                </ul>
+                                <li>
+                                    <Link to="/groups/">Для групп</Link>
+                                    <ul className="level_2">
+                                        <li>
+                                            <Link to="/groups/week">На неделю</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/groups/day">На день</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/groups/blind">Для слабовидящих</Link>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                                <Link to="/teachers/">Для учителей</Link>
-                                <ul className="level_1">
-                                    <li>
-                                        <Link to="/teachers/week">На неделю</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/teachers/day">На день</Link>
-                                    </li>
-                                </ul>
+                                <li>
+                                    <Link to="/teachers/">Для учителей</Link>
+                                    <ul className="level_2">
+                                        <li>
+                                            <Link to="/teachers/week">На неделю</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/teachers/day">На день</Link>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                     </ul>
