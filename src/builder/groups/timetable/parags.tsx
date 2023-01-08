@@ -15,7 +15,7 @@ export default function BuilderParags({ explain }: { explain: GroupLessonExplain
         </td>
         <td>
             {explain.map((lesson: GroupLessonExplain, i: number): JSX.Element => {
-                return <p key={i}>{lesson.cabinet || '-'}</p>
+                return <p key={i}>{lesson.cabinet}</p>
             })}
         </td>
         <td>

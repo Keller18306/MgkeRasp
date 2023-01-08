@@ -19,6 +19,7 @@ const router = createHashRouter(
         <Route path="teachers">
             <Route index element={<ViewerTeachers.Week />} />
             <Route path="week" element={<ViewerTeachers.Week />} />
+            <Route path="day" element={<ViewerTeachers.Day />} />
         </Route>
     </Route>
     )

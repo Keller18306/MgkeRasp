@@ -9,7 +9,7 @@ export default function TeacherTable({ days }: { days: TeacherDay[] }): JSX.Elem
                 <th rowSpan={2} className="center">№</th>
                 {days.map((day: TeacherDay, i: number): JSX.Element => {
                     return <React.Fragment key={i}>
-                        <th className="center">Дисциплина</th>
+                        <th className="center">Предмет</th>
                         <th className="center">Ауд.</th>
                     </React.Fragment>
                 })}

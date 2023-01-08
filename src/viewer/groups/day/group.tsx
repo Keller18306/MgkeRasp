@@ -10,7 +10,7 @@ export default function ViewerGroup({ group, day }: { group: string, day: GroupD
                 </tr>
                 <tr className='center'>
                     <td>№</td>
-                    <td>Дисциплина</td>
+                    <td>Предмет</td>
                     <td>Вид</td>
                     <td>Аудитория</td>
                     <td>Преподаватель</td>

@@ -19,7 +19,7 @@ export default function BuilderTable({ days }: { days: TeacherDay[] }): JSX.Elem
             <tr>
                 {days.map((day: TeacherDay, i: number): JSX.Element => {
                     return <React.Fragment key={i}>
-                        <td>Дисциплина</td>
+                        <td>Предмет</td>
                         <td>Вид</td>
                         <td>Ауд.</td>
                         <td>Группа</td>

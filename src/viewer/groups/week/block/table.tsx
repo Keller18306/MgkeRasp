@@ -10,7 +10,7 @@ export default function StudentDayTable({ day }: { day: GroupDay }): JSX.Element
                 </tr>
                 <tr className='center'>
                     <td>№</td>
-                    <td>Дисциплина</td>
+                    <td>Предмет</td>
                     <td>Вид</td>
                     <td>Аудитория</td>
                     <td>Преподаватель</td>

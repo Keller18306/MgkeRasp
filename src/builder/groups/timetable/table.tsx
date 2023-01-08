@@ -19,7 +19,7 @@ export default function BuilderTable({ days }: { days: GroupDay[] }): JSX.Elemen
             <tr>
                 {days.map((day: GroupDay, i: number): JSX.Element => {
                     return <React.Fragment key={i}>
-                        <td>Дисциплина</td>
+                        <td>Предмет</td>
                         <td>Вид</td>
                         <td>Ауд.</td>
                         <td>Преподаватель</td>

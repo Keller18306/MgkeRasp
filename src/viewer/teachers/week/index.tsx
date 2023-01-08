@@ -5,13 +5,13 @@ import Header from "../../header";
 import TeacherBlock from "./block";
 
 export default function ViewerWeek(): JSX.Element {
-    const teachers = useMemo<Teachers>(() => {
+    const teachers = useMemo<Teachers>((): Teachers => {
         return (window as any).PAGE_GROUPS.teachers;
     }, []);
 
     const [searchValue, setSearchValue] = useState<string | undefined>()
 
-    useEffect(() => {
+    useEffect((): void => {
         const groupValue: string | null = localStorage.getItem('mgke-rasp_teacher')
 
         if (groupValue) {
