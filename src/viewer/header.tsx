@@ -5,7 +5,7 @@ export default function ViewerHeader({ children }: PropsWithChildren): JSX.Eleme
     return <div className="header">
         <div className="content">{children}</div>
         <div className="navbar">
-            <div className="panel section_menu">
+            <div className="panel">
                 <div className="panel-heading">Ещё в этом разделе</div>
                 <div className="panel-body">
                     <ul className="level_0 parent_active">
