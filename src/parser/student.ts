@@ -90,7 +90,7 @@ export default class StudentParser extends AbstractParser {
             const row = rows[row_i]
             const cells = row.cells
 
-            for (let cell_i: number = 1; cell_i < Math.floor(cells.length / 2); cell_i++) {
+            for (let cell_i: number = 1; cell_i < Math.ceil(cells.length / 2); cell_i++) {
                 const day = cell_i - 1;
 
                 const lessonCell = cells[cell_i * 2 - 1];
